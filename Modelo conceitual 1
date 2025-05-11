@@ -1,0 +1,20 @@
+ENTIDADE Livro
+  Atributos: ISBN (PK), Titulo, Ano, Editora
+
+ENTIDADE Autor
+  Atributos: ID_Autor (PK), Nome, Nacionalidade
+
+ENTIDADE Usuario
+  Atributos: ID_Usuario (PK), Nome, Email
+
+ENTIDADE Emprestimo
+  Atributos: ID_Emprestimo (PK), Data_Emprestimo, Data_Devolucao
+
+RELACIONAMENTO Escreve (N:N)
+  Autor (1,N) --- (N,N) Livro
+
+RELACIONAMENTO Realiza (1:N)
+  Usuario (1,1) --- (0,N) Emprestimo
+
+RELACIONAMENTO Inclui (N:N)
+  Emprestimo (1,N) --- (1,N) Livro
