@@ -1,0 +1,48 @@
+-- Tabela: autores
+CREATE TABLE autores (
+    id_autor INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    nacionalidade VARCHAR(50) DEFAULT NULL,
+    INDEX (nome)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabela: livros
+CREATE TABLE livros (
+    id_livro INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    id_autor INT UNSIGNED,
+    ano_publicacao YEAR,
+    genero VARCHAR(50),
+    FOREIGN KEY (id_autor) REFERENCES autores(id_autor)
+        ON DELETE SET NULL
+        ON UPDATE CASCADE,
+    INDEX (titulo),
+    INDEX (genero)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabela: usuarios
+CREATE TABLE usuarios (
+    id_usuario INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    telefone VARCHAR(20) DEFAULT NULL,
+    INDEX (nome)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabela: emprestimos
+CREATE TABLE emprestimos (
+    id_emprestimo INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT UNSIGNED NOT NULL,
+    id_livro INT UNSIGNED NOT NULL,
+    data_emprestimo DATE NOT NULL,
+    data_devolucao DATE DEFAULT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (id_livro) REFERENCES livros(id_livro)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    INDEX (id_usuario),
+    INDEX (id_livro),
+    INDEX (data_emprestimo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
